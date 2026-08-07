@@ -1,0 +1,226 @@
+:root {
+  color-scheme: light dark;
+  --bg: #e7efe6;
+  --panel: #ffffff;
+  --text: #142018;
+  --muted: #5c6b5e;
+  --line: #c5d4c6;
+  --accent: #2f6f4e;
+  --on-accent: #f3fff6;
+  --warn: #b45309;
+  --ok: #15803d;
+  --tap: 48px;
+  --radius: 0.85rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0c110d;
+    --panel: #151c16;
+    --text: #e7efe9;
+    --muted: #93a398;
+    --line: #2a332b;
+    --accent: #4ecf7a;
+    --on-accent: #08140c;
+    --warn: #fbbf24;
+    --ok: #4ade80;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.ambiance {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(680px 380px at 10% -10%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 55%),
+    radial-gradient(520px 300px at 100% 80%, color-mix(in oklab, #d97706 12%, transparent), transparent 50%),
+    var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  font-family: "Avenir Next", "Segoe UI", "PingFang TC", "Noto Sans TC", sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+main {
+  width: min(100%, 28rem);
+  margin: 0 auto;
+  padding: 0.85rem 0.7rem max(1rem, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hero {
+  text-align: center;
+}
+.eyebrow {
+  margin: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.hero h1 {
+  margin: 0.1rem 0 0;
+  font-size: clamp(1.7rem, 5vw, 2.1rem);
+  letter-spacing: 0.18em;
+}
+.tagline {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.meter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.meter-item {
+  flex: 1 1 4rem;
+  min-height: var(--tap);
+  padding: 0.3rem 0.4rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--panel) 92%, transparent);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.meter-item .label {
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+.meter-item strong {
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.controls button,
+.pad-btn,
+button {
+  min-height: var(--tap);
+  border-radius: 0.75rem;
+  border: 1px solid transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.4rem 0.7rem;
+  -webkit-tap-highlight-color: transparent;
+}
+.controls button {
+  flex: 1 1 auto;
+}
+button:not(.secondary):not(.pad-btn) {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+button.secondary,
+.pad-btn {
+  background: color-mix(in oklab, var(--text) 5%, var(--panel));
+  border-color: var(--line);
+  color: var(--text);
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.status {
+  margin: 0;
+  text-align: center;
+  min-height: 1.25em;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.status[data-tone="ok"] {
+  color: var(--ok);
+}
+.status[data-tone="warn"] {
+  color: var(--warn);
+}
+
+.stage {
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  background: color-mix(in oklab, var(--panel) 90%, transparent);
+  display: flex;
+  justify-content: center;
+  padding: 0.55rem;
+}
+#game {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  touch-action: none;
+  border-radius: 0.4rem;
+}
+
+.pad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  max-width: 16rem;
+  margin: 0 auto;
+  width: 100%;
+}
+.pad-btn {
+  font-size: 1.2rem;
+}
+
+.panel {
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+.panel[hidden] {
+  display: none !important;
+}
+.panel p {
+  margin: 0 0 0.55rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.rules {
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: color-mix(in oklab, var(--panel) 90%, transparent);
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.rules summary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text);
+  font-weight: 700;
+}
+
+@media (min-width: 640px) {
+  main {
+    width: min(100%, 34rem);
+  }
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="推箱子：多關卡、復原、滑動操作。純前端 Playgrounds SAM，適配手機與桌面。"
+    />
+    <title>推箱子</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambiance" aria-hidden="true"></div>
+    <main>
+      <header class="hero">
+        <p class="eyebrow">益智</p>
+        <h1>推箱子</h1>
+        <p class="tagline">多關卡 · 復原一步 · 滑動操作</p>
+      </header>
+
+      <section class="meter" aria-label="對局狀態">
+        <div class="meter-item"><span class="label">關卡</span><strong id="level">1/12</strong></div>
+        <div class="meter-item"><span class="label">名稱</span><strong id="level-name">—</strong></div>
+        <div class="meter-item"><span class="label">步數</span><strong id="moves">0</strong></div>
+        <div class="meter-item"><span class="label">推動</span><strong id="pushes">0</strong></div>
+        <div class="meter-item"><span class="label">最佳</span><strong id="best">—</strong></div>
+      </section>
+
+      <div class="controls">
+        <button type="button" id="btn-prev" class="secondary">上一關</button>
+        <button type="button" id="btn-next" class="secondary">下一關</button>
+        <button type="button" id="btn-undo" class="secondary" disabled>復原</button>
+        <button type="button" id="btn-reset" class="secondary">重來</button>
+        <button type="button" id="btn-mute" class="secondary" aria-pressed="true">音效</button>
+      </div>
+
+      <p id="status" class="status" role="status">把箱子推到黃點上</p>
+
+      <div class="stage">
+        <canvas id="game" width="288" height="180" aria-label="推箱子地圖"></canvas>
+      </div>
+
+      <div class="pad" aria-label="方向鍵">
+        <span></span>
+        <button type="button" class="pad-btn" data-dir="0,-1" aria-label="上">↑</button>
+        <span></span>
+        <button type="button" class="pad-btn" data-dir="-1,0" aria-label="左">←</button>
+        <button type="button" class="pad-btn" data-dir="0,1" aria-label="下">↓</button>
+        <button type="button" class="pad-btn" data-dir="1,0" aria-label="右">→</button>
+      </div>
+
+      <div id="win-panel" class="panel" hidden>
+        <p id="win-text">過關！</p>
+        <div class="controls">
+          <button type="button" id="btn-win-next">下一關</button>
+          <button type="button" id="btn-win-close" class="secondary">關閉</button>
+        </div>
+      </div>
+
+      <details class="rules">
+        <summary>怎麼玩</summary>
+        <ul>
+          <li>把所有箱子推到黃點；一次只能推一個，不能拉。</li>
+          <li>方向鍵／WASD／畫面滑動／下方按鍵移動；Z 復原、R 重來。</li>
+          <li>名稱與關卡為原創小品，致敬推箱子類型，非商業關卡包復刻。</li>
+        </ul>
+      </details>
+    </main>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
