@@ -42,6 +42,8 @@ function saveBests() {
   } catch {
     /* */
   }
+  // KV 為權威；LS 僅快取
+  void fetch(`/api/kv/${BEST_KEY}`, { method: "PUT", body: JSON.stringify(bests) }).catch(() => {});
 }
 
 /** @param {string} msg @param {string} [tone] */
@@ -300,5 +302,22 @@ window.addEventListener("resize", () => {
   resize();
   draw();
 });
+
+// KV 為權威；本地快取過舊時以遠端為準（少步數佳）
+void fetch(`/api/kv/${BEST_KEY}`)
+  .then((r) => (r.ok ? r.text() : null))
+  .then((raw) => {
+    const parsed = raw ? JSON.parse(raw) : null;
+    if (parsed && typeof parsed === "object") {
+      for (const [k, v] of Object.entries(parsed)) {
+        const n = Number(v);
+        if (!Number.isFinite(n) || n < 0) continue;
+        const cur = bests[k];
+        if (cur == null || n < cur) bests[k] = n;
+      }
+    }
+    syncHud();
+  })
+  .catch(() => {});
 
 startLevel(0);
